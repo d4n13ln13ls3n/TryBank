@@ -38,6 +38,7 @@ public class TrybankLib
                 
             }
         }
+
         if (registeredAccounts >= maxAccounts)
         {
             throw new InvalidOperationException("O limite máximo de contas (50) foi atingido.");
@@ -53,7 +54,34 @@ public class TrybankLib
     // 2. Construa a funcionalidade de fazer Login
     public void Login(int number, int agency, int pass)
     {
-        throw new NotImplementedException();
+        if (Logged)
+        {
+            throw new AccessViolationException("Usuário já está logado");
+        }
+
+        for (int i = 0; i < Bank.GetLength(0); i++)
+        {
+            for (int j = 0; j < Bank.GetLength(1); j++)
+            {
+                if (Bank[i,0] == number && Bank[i,1] == agency)
+                {
+                    if (Bank[i,2] == pass)
+                    {
+                        Logged = true;
+                        loggedUser = i;
+                        return;
+                    }
+                    else
+                    {
+                        throw new ArgumentException("Senha incorreta");
+                    }
+                }
+                else
+                {
+                    throw new ArgumentException("Agência + Conta não encontrada");
+                }
+            }
+        }
     }
 
     // 3. Construa a funcionalidade de fazer Logout
