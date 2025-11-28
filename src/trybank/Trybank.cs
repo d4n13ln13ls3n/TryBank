@@ -21,10 +21,33 @@ public class TrybankLib
         Bank = new int[maxAccounts, 4];
     }
 
+    // var mockCurrentAccounts = {{1234, 1, 987, 0},{5678, 2, 765, 0}};
+    //Agência 1, Número da conta: 1234, Senha: 987, Saldo: 0
     // 1. Construa a funcionalidade de cadastrar novas contas
     public void RegisterAccount(int number, int agency, int pass)
     {
-        throw new NotImplementedException();
+        for (int i = 0; i < Bank.GetLength(0); i++)
+        {
+            for (int j = 0; j < Bank.GetLength(1); j++)
+            {
+                if (Bank[i,0] == number && Bank[i,1] == agency)
+                {
+                    throw new ArgumentException("A conta já está sendo usada!");
+                }
+
+                
+            }
+        }
+        if (registeredAccounts >= maxAccounts)
+        {
+            throw new InvalidOperationException("O limite máximo de contas (50) foi atingido.");
+        }
+
+        Bank[registeredAccounts,0] = number;
+        Bank[registeredAccounts,1] = agency;
+        Bank[registeredAccounts,2] = pass;
+        Bank[registeredAccounts,3] = 0;
+        registeredAccounts++;
     }
 
     // 2. Construa a funcionalidade de fazer Login
