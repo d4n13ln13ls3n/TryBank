@@ -11,7 +11,7 @@ public class TrybankLib
     //3 -> Saldo
     public int[,] Bank;
     public int registeredAccounts;
-    private int maxAccounts = 50;
+    private readonly int maxAccounts = 50;
 
     public TrybankLib()
     {
@@ -21,22 +21,14 @@ public class TrybankLib
         Bank = new int[maxAccounts, 4];
     }
 
-    // var mockCurrentAccounts = {{1234, 1, 987, 0},{5678, 2, 765, 0}};
-    //Agência 1, Número da conta: 1234, Senha: 987, Saldo: 0
-    // 1. Construa a funcionalidade de cadastrar novas contas
     public void RegisterAccount(int number, int agency, int pass)
     {
-        for (int i = 0; i < Bank.GetLength(0); i++)
+        for (int i = 0; i < registeredAccounts; i++)
         {
-            for (int j = 0; j < Bank.GetLength(1); j++)
-            {
                 if (Bank[i,0] == number && Bank[i,1] == agency)
                 {
                     throw new ArgumentException("A conta já está sendo usada!");
                 }
-
-                
-            }
         }
 
         if (registeredAccounts >= maxAccounts)
@@ -51,40 +43,32 @@ public class TrybankLib
         registeredAccounts++;
     }
 
-    // 2. Construa a funcionalidade de fazer Login
     public void Login(int number, int agency, int pass)
     {
         if (Logged)
-        {
             throw new AccessViolationException("Usuário já está logado");
-        }
 
-        for (int i = 0; i < Bank.GetLength(0); i++)
+        for (int i = 0; i < registeredAccounts; i++)
         {
-            for (int j = 0; j < Bank.GetLength(1); j++)
+            if (Bank[i,0] == number && Bank[i,1] == agency)
             {
-                if (Bank[i,0] == number && Bank[i,1] == agency)
+                if (Bank[i,2] == pass)
                 {
-                    if (Bank[i,2] == pass)
-                    {
-                        Logged = true;
-                        loggedUser = i;
-                        return;
-                    }
-                    else
-                    {
-                        throw new ArgumentException("Senha incorreta");
-                    }
+                    Logged = true;
+                    loggedUser = i;
+                    return;
                 }
                 else
                 {
-                    throw new ArgumentException("Agência + Conta não encontrada");
+                    throw new ArgumentException("Senha incorreta");
                 }
             }
         }
+
+        throw new ArgumentException("Agência + Conta não encontrada");
     }
 
-    // 3. Construa a funcionalidade de fazer Logout
+
     public void Logout()
     {
         if (!Logged)
@@ -96,7 +80,6 @@ public class TrybankLib
         loggedUser = -99;
     }
 
-    // 4. Construa a funcionalidade de checar o saldo
     public int CheckBalance()
     {
         if (!Logged)
@@ -107,7 +90,6 @@ public class TrybankLib
         return Bank[loggedUser, 3];
     }
 
-    // 5. Construa a funcionalidade de depositar dinheiro
     public void Deposit(int value)
     {
         if (!Logged)
@@ -118,7 +100,6 @@ public class TrybankLib
         Bank[loggedUser, 3] += value;
     }
 
-    // 6. Construa a funcionalidade de sacar dinheiro
     public void Withdraw(int value)
     {
         if (!Logged)
@@ -137,7 +118,6 @@ public class TrybankLib
 
     }
 
-    // 7. Construa a funcionalidade de transferir dinheiro entre contas
     public void Transfer(int destinationNumber, int destinationAgency, int value)
     {
         int destination = 0;
@@ -152,16 +132,13 @@ public class TrybankLib
         }
         else
         {
-            for (int i = 0; i < Bank.GetLength(0); i++)
+            for (int i = 0; i < registeredAccounts; i++)
             {
-                for (int j = 0; j < Bank.GetLength(1); j++)
-                {
                     if (Bank[i,0] == destinationNumber && Bank[i,1] == destinationAgency)
                     {
                         destination = i;
                         break;
                     }
-                }
             }
 
             Withdraw(value);
