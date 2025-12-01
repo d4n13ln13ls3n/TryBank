@@ -44,15 +44,17 @@ Este repositório contém **modificações importantes** em relação ao templat
 - Mensagens de menu mais claras.
 - Mensagens de sucesso/erro mais informativas.
 - Tratamento de entradas inválidas para evitar crashes.
-- Nomes de variáveis e comentários para melhor manutenção.# TryBank – Console Banking System (Refactored Version)
+- Nomes de variáveis e comentários para melhor manutenção.
+
+----
+ENGLISH VERSION
+- # TryBank – Console Banking System (Refactored Version)
 
 This project is a refactored and expanded version of Trybe’s original **TryBank** assignment.  
 The goal of the project is to simulate core banking operations using **C#** and an **in-memory multidimensional array**, without any data persistence.
 
 This repository contains **significant modifications** compared to the original Trybe template, focusing on making the project fully executable in the console with a complete user flow.
 
----
-ENGLISH VERSION
 ## 🚀 Features
 
 ### ✔ Implemented Requirements (Original Project)
